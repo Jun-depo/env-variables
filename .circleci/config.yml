@@ -1,17 +1,27 @@
 version: 2.1
 
-workflows:
-  test-env-vars:
-    jobs:
-      - build
-
+orbs:
+  aws-cli: circleci/aws-cli@0.1.4
+  
 jobs:
-  build:
+  create_infrastructure:
     docker:
-      - image: cimg/base:2020.01
+      - image: amazon/aws-cli
+        auth:
+          aws_access_key_id: $my_acc_key
+          aws_secret_access_key: $my_sec_key
+          region: $region
     steps:
       - checkout
       - run:
-          name: "echo an env var that is part of our project"
+          name: "cloudformation build ec2"
           command: |
-            echo $MY_ENV_VAR
+            aws cloudformation create-stack \
+              --stack-name newEC2 --template-body file://template.yml \
+              --capabilities "CAPABILITY_IAM" "CAPABILITY_NAMED_IAM" \
+              –-region=us-west-2
+            
+workflows:
+  cloudformation-ec2:
+    jobs:
+      - create_infrastructure
