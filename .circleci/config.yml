@@ -4,19 +4,14 @@ jobs:
   create_infrastructure:
     docker:
       - image: amazon/aws-cli
-        auth:
-          aws_access_key_id: $my_acc_key
-          aws_secret_access_key: $my_sec_key
-          region: $region
     steps:
       - checkout
       - run:
           name: "cloudformation build ec2"
           command: |
-            aws cloudformation create-stack \
-              --stack-name newEC2 --template-body file://template.yml \
+            aws cloudformation deploy \
+              --stack-name newEC2 --template-body template.yml \
               --capabilities "CAPABILITY_IAM" "CAPABILITY_NAMED_IAM" \
-              –-region=us-west-2
             
 workflows:
   cloudformation-ec2:
