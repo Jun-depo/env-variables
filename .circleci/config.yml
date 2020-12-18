@@ -10,7 +10,7 @@ jobs:
           name: "cloudformation build ec2"
           command: |
             aws cloudformation deploy \
-              --stack-name newEC2 --template-body template.yml \
+              --stack-name newEC2 --template-file template.yml \
               --capabilities "CAPABILITY_IAM" "CAPABILITY_NAMED_IAM" \
             
 workflows:
