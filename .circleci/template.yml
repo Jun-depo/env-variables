@@ -6,9 +6,6 @@ Resources:
     Properties:
       CidrBlock: 10.0.0.0/16
       EnableDnsHostnames: true
-      Tags: 
-        - Key: Name 
-          Value: !Ref EnvironmentName
 
   EC2SecGroup:
     Type: AWS::EC2::SecurityGroup
@@ -39,10 +36,6 @@ Resources:
 
   InternetGateway:
     Type: AWS::EC2::InternetGateway
-    Properties:
-      Tags:
-        - Key: Name
-          Value: !Ref EnvironmentName
 
   InternetGatewayAttachment:
     Type: AWS::EC2::VPCGatewayAttachment
