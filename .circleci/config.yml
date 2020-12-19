@@ -25,7 +25,7 @@ jobs:
     docker:
       - image: amazon/aws-cli
     steps:
-      -checkout
+      - checkout
       - run:
           name: create error
           command: |
