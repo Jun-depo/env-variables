@@ -8,8 +8,7 @@ commands:
           name: destroy stack on failure
           when: on_fail
           command: |
-            aws cloudformation delete-stack prod-${CIRCLE_WORKFLOW_ID}
-
+            aws cloudformation delete-stack ec2stack
 jobs:
   create_infrastructure:
     docker:
@@ -21,7 +20,7 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file .circleci/template.yml \
-              --stack-name prod-${CIRCLE_WORKFLOW_ID}
+              --stack-name ec2stack
       - run: exit 1
       - delete_stack
 
