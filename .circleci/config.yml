@@ -9,7 +9,6 @@ commands:
           when: on_fail
           command: |
             aws cloudformation delete-stack prod-${CIRCLE_WORKFLOW_ID}
-            exit 1
 
 jobs:
   create_infrastructure:
@@ -23,7 +22,7 @@ jobs:
             aws cloudformation deploy \
               --template-file .circleci/template.yml \
               --stack-name prod-${CIRCLE_WORKFLOW_ID}
-      - run: return 1
+      - run: exit 1
       - delete_stack
 
 workflows:
