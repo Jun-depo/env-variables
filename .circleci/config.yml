@@ -6,25 +6,25 @@ commands:
     steps:
       - run:
           name: destroy stack on failure
-          command: |
-            aws cloudformation delete-stack ec2stack
+          command: "aws cloudformation delete-stack newEC2"
           when: on_fail
 jobs:
-  create_infrastructure:
+  build:
     docker:
       - image: amazon/aws-cli
     steps:
       - checkout
       - run:
-          name: "cloudformation build ec2"
+          name: "build stack2"
           command: |
             aws cloudformation deploy \
               --template-file .circleci/template.yml \
-              --stack-name ec2stack
+              --stack-name newEC2
+      - run: True
       - delete_stack
 
 workflows:
   # Name the workflow "create_delete"
   create_delete:
     jobs:
-      - create_infrastructure
+      - build
