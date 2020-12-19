@@ -31,7 +31,7 @@ jobs:
           command: |
             return 1
       - delete_stack
-        when: on_fail
+          when: on_fail
             
 workflows:
   # Name the workflow "welcome"
