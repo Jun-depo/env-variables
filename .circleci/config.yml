@@ -38,9 +38,5 @@ workflows:
   welcome:
     # Run the welcome/run job in its own container
     jobs:
-<<<<<<< HEAD
       - create_infrastructure
       - destroy_infrastructure
-=======
-      - welcome/run
->>>>>>> 3e1989aee036635b7dc377ea49505c5d5eea23a0
