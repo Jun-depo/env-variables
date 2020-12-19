@@ -1,6 +1,4 @@
-
 Resources:
-  
   VPC:
     Type: AWS::EC2::VPC
     Properties:
@@ -11,13 +9,13 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     DependsOn: InternetGatewayAttachment
     Properties:
-      GroupDescription: ssh EC2 via port 22 
+      GroupDescription: ssh EC2 via port 22
       VpcId: !Ref VPC
       SecurityGroupIngress:
-      - IpProtocol: tcp
-        FromPort: 22
-        ToPort: 22
-        CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
 
   EC2Instance1:
     Type: AWS::EC2::Instance
@@ -26,12 +24,12 @@ Resources:
       ImageId: ami-07dd19a7900a1f049
       InstanceType: t2.micro
       SecurityGroupIds:
-      - !Ref EC2SecGroup
+        - !Ref EC2SecGroup
       KeyName: udacity
       BlockDeviceMappings:
-      - DeviceName: "/dev/sdh"
-        Ebs:
-          VolumeSize: "8" 
+        - DeviceName: "/dev/sdh"
+          Ebs:
+            VolumeSize: "8"
       SubnetId: !Ref PublicSubnet1
 
   InternetGateway:
@@ -43,23 +41,23 @@ Resources:
       InternetGatewayId: !Ref InternetGateway
       VpcId: !Ref VPC
 
-  PublicSubnet1: 
+  PublicSubnet1:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref VPC
-      AvailabilityZone: !Select [ 0, !GetAZs '' ]
+      AvailabilityZone: !Select [0, !GetAZs ""]
       CidrBlock: 10.0.0.0/24
       MapPublicIpOnLaunch: true
-     
+
   PublicRouteTable:
     Type: AWS::EC2::RouteTable
-    Properties: 
+    Properties:
       VpcId: !Ref VPC
 
-  DefaultPublicRoute: 
+  DefaultPublicRoute:
     Type: AWS::EC2::Route
     DependsOn: InternetGatewayAttachment
-    Properties: 
+    Properties:
       RouteTableId: !Ref PublicRouteTable
       DestinationCidrBlock: 0.0.0.0/0
       GatewayId: !Ref InternetGateway
