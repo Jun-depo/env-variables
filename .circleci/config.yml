@@ -28,10 +28,10 @@ jobs:
       - checkout
       - run:
           name: create error
+          when: on_fail
           command: |
             return 1
-      - delete_stack
-          when: on_fail
+          - delete_stack         
             
 workflows:
   # Name the workflow "welcome"
